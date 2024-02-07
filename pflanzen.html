@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+<div class="container">
+  <h1>Hydro-Pflanzen unserer Community</h1>
+  <br>
+<!--Formular für das Anlegen-->
+  <!--button id="open-modal-button" class="btn btn-default">Anlegen eines neuen Eintrags</button-->
+  <a class="btn btn-default" href="{{ url_for('pflanzen_page', id='new') }}">Anlegen eines neuen Eintrags</a>
+  <br>
+  <br>
+  <dialog id="create-entry-modal">
+    {% if modus == "insert" %}
+  <h1>Anlegen eines neuen Eintrags</h1>
+    {% else %}
+    <h1>Ändern eines Eintrags</h1>
+    {% endif %}
+  <br>
+  <div class="container">
+    <form method="post" action="" novalidate enctype="multipart/form-data">
+      {{ detail_form.hidden_tag() }}
+      <div class="row">
+        <div class="col-md-6">
+            {{ wtf.form_field(detail_form.name) }}
+        </div>
+        <div class="col-md-6">
+          {{ wtf.form_field(detail_form.wissenschaft_name) }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <img src="{{ detail_form.bild.data }}" alt="" width="auto" height="500">
+          {{ wtf.form_field(detail_form.bild) }}
+        </div>
+        <div class="col-md-4">
+          {{ wtf.form_field(detail_form.familie) }}
+          {{ wtf.form_field(detail_form.vegetationszone) }}
+          {{ wtf.form_field(detail_form.will_sonne) }}
+          {{ wtf.form_field(detail_form.gefahr) }}
+        </div>
+      </div>
+      <br>
+
+      {% if modus == "insert" %}
+        {{ wtf.form_field(detail_form.anlegen) }}
+      {% else %}
+        {{ wtf.form_field(detail_form.aendern) }}
+      {% endif %}
+    </form>
+      <br>
+      <br>
+      <button id="close-modal-button" class="btn btn-default">Abbrechen</button>
+  </div>
+</dialog>
+
+<!--Formular für die bereits vorhandenen Datensätze-->
+    <table id="data" class="table">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+      <thead>
+        <tr>
+          <th>
+            {{form.name.label}}
+          </th>
+          <th>
+            {{form.wissenschaft_name.label}}
+          </th>
+          <th>
+            {{form.familie.label}}
+          </th>
+          <th>
+            {{form.bild.label}}
+          </th>
+          <th>
+            {{form.vegetationszone.label}}
+          </th>
+          <th>
+            {{form.will_sonne.label}}
+          </th>
+          <th>
+            {{form.gefahr.label}}
+          </th>
+          <th>
+            Aktion
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for pflanze in pflanzen %}
+          <tr>
+            <td>
+              {{pflanze.name}}
+            </td>
+            <td>
+              {{pflanze.wissenschaft_name}}
+            </td>
+            <td>
+              {{pflanze.familie}}
+            </td>
+            <td>
+              <img src="{{'/static/uploads/Pflanze_' + pflanze.id|string + '.jpg'}}" alt="" height="50" width="50">
+            </td>
+            <td>
+              {{pflanze.vegetationszone}}
+            </td>
+            <td>
+              {{pflanze.will_sonne}}
+            </td>
+            <td>
+              {{pflanze.gefahr}}
+            </td>
+            <td>
+              <a class="btn btn-default" href="{{url_for('form_pflanze_details',id=pflanze.id)}}" role="button">Details</a>
+            </td>
+          </tr>
+       {% endfor %}
+    </tbody>
+  </table>
+</div>
+  {% endblock %}
+
+  {% block scripts %}
+  {{ super() }}
+  <script>
+    const openButton = document.getElementById('open-modal-button')
+    const closeButton = document.getElementById('close-modal-button')
+    const modal = document.getElementById('create-entry-modal')
+
+    var showModal = false
+    if ( "{{ showModal }}" == "True" ){
+      showModal = true
+    }
+  
+    //openButton.addEventListener("click", () => {
+    //  modal.showModal()
+    //})
+    closeButton.addEventListener("click", () => {
+      modal.close()
+    })
+    $(document).ready(function () {
+      $('#data').DataTable(); // table mit id "data" um sort/filter/paginate erweitern
+      
+      //Modal ggf. anzeigen
+      if (showModal == true){
+        const modal = document.getElementById('create-entry-modal')
+        modal.showModal()
+      }
+    });
+  </script>
+  {% endblock %}

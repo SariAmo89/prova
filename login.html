@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+    <div class="container">
+        <h1>Anmelden</h1>
+        <br>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.username) }}
+            {{ wtf.form_field(form.password) }}
+            {{ wtf.form_field(form.remember_me) }}
+            {{ wtf.form_field(form.login) }}
+        </form>
+        <br>
+        <p>Neu auf Hydro online? <a href="{{ url_for('register') }}">Jetzt registrieren</a></p>
+    </div>
+{% endblock %}

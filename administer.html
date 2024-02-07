@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+    <div class="container">
+        <h1>Admin-Bereich</h1>
+        <h2>Registrierte Benutzer</h2>
+        <br>
+        <table id="data" class="table">
+            <form method="POST" action="">
+              {{ form.hidden_tag() }}
+            <thead>
+              <tr>
+                <th>
+                  {{form.username.label}}
+                </th>
+                <th>
+                  {{form.email.label}}
+                </th>
+                <th>
+                  Aktion
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                  <td>
+                    {{user.username}}
+                  </td>
+                  <td>
+                    {{user.email}}
+                  </td>
+                  <td>
+                    <a class="btn btn-default" href="{{url_for('user_details',id=user.id)}}" role="button">Details</a>
+                  </td>
+                </tr>
+             {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% endblock %}

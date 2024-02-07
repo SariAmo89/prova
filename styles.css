@@ -1,0 +1,9 @@
+.carousel img {
+
+	margin: auto;
+
+}
+
+.carousel-inner {
+	max-height: 600px !important;
+}

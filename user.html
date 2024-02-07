@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+  <div class="container">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.email) }}
+
+        <br>
+        {{ form.abbrechen() }}
+        {{ form.aendern() }}
+  </div>
+  {% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+
+<!--Formular für die zu ändernde Pflanze-->
+  <div class="container">
+      <form method="post" action="" novalidate enctype="multipart/form-data">
+        {{ pflanze_form.hidden_tag() }}
+        <div class="row">
+          <div class="col-md-6">
+              {{ wtf.form_field(pflanze_form.name) }}
+          </div>
+          <div class="col-md-6">
+            {{ wtf.form_field(pflanze_form.wissenschaft_name) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <img src="{{pflanze_bild_datei}}" alt="" width="auto" height="500">
+            {{ wtf.form_field(pflanze_form.bild) }}
+          </div>
+          <div class="col-md-4">
+            {{ wtf.form_field(pflanze_form.familie) }}
+            {{ wtf.form_field(pflanze_form.vegetationszone) }}
+            {{ wtf.form_field(pflanze_form.will_sonne) }}
+            {{ wtf.form_field(pflanze_form.gefahr) }}
+          </div>
+        </div>
+        <br>
+              {{ wtf.form_field(pflanze_form.aendern) }}
+              {{ wtf.form_field(pflanze_form.loeschen) }}
+              <br>
+              <br>
+              <br>
+              {{ wtf.form_field(pflanze_form.abbrechen) }}
+  </div>
+  {% endblock %}

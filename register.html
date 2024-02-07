@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block my_content %}
+    <div class="container">
+        <h1>Registrieren</h1>
+        <br>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_field(form.username) }}
+            {{ wtf.form_field(form.email) }}
+            {{ wtf.form_field(form.password) }}
+            {{ wtf.form_field(form.password2) }}
+            {{ wtf.form_field(form.register) }}
+        </form>
+    </div>
+{% endblock %}
